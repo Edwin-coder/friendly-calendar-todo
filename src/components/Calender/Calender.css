@@ -4,6 +4,12 @@
     border: 10px solid red;
 }
 
+.ctn-month{
+    display: flex;
+    justify-content: center;
+    gap: 4.4rem;
+}
+
 .calender-content{
     /* padding: 10px; */
     display: grid;

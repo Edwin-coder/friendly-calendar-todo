@@ -9,6 +9,12 @@ export class Calender extends Component {
     return (
       <div className="container">
 
+        <div className='ctn-month'>
+          <div className="previous-month">Feb</div>
+          <div className="current-month">March</div>
+          <div className="upcoming-month">April</div>
+        </div>
+
         <ol className="calender-content">
             <li className='day-name'>Sun</li>
             <li className='day-name'>Mon</li>
