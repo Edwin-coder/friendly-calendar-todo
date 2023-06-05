@@ -1,19 +1,38 @@
 
 
 .container{
-    border: 10px solid red;
+    margin: 7rem 14rem;
+    padding: 8rem 19rem 8.3rem 19rem;
+    background-color: #CB66BD;
+    color: azure;
+    
+
 }
 
 .ctn-month{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 4.4rem;
+    margin-bottom: 3.2rem;
 }
+
+.current-month {
+    font-size: 3rem;
+    text-transform: uppercase;
+}
+
+.preview-months{
+    text-transform: capitalize;
+    font-size: 1.8rem;
+}
+
 
 .calender-content{
     /* padding: 10px; */
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    gap: 2.4rem;
 }
 
 ol {
@@ -27,11 +46,11 @@ ol {
 
 
 .day-name{
-    background-color: #eee;
+    font-size: 1.8rem;
 }
 
 .day-number{
-    border: 2px solid #eee;
+    font-size: 1.8rem;
 }
 
 

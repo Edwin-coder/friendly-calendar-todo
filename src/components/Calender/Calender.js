@@ -10,9 +10,9 @@ export class Calender extends Component {
       <div className="container">
 
         <div className='ctn-month'>
-          <div className="previous-month">Feb</div>
+          <div className="preview-months">Feb</div>
           <div className="current-month">March</div>
-          <div className="upcoming-month">April</div>
+          <div className="preview-months">April</div>
         </div>
 
         <ol className="calender-content">
