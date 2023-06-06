@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import './Calender.css'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLongArrowRight, faLongArrowLeft, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
 export class Calender extends Component {
 
   // 7 cols , 6 rows
@@ -10,9 +13,15 @@ export class Calender extends Component {
       <div className="container">
 
         <div className='ctn-month'>
-          <div className="preview-months">Feb</div>
+          <div className="ctn-arrow-month">
+            <FontAwesomeIcon icon={faArrowLeft} size='2x' /> 
+            <div className="preview-months">Feb</div>
+          </div>
           <div className="current-month">March</div>
-          <div className="preview-months">April</div>
+          <div className="ctn-arrow-month">
+            <div className="preview-months">April</div>
+            <FontAwesomeIcon icon={faArrowRight} size='2x' /> 
+          </div>
         </div>
 
         <ol className="calender-content">

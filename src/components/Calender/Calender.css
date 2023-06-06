@@ -3,29 +3,38 @@
 .container{
     margin: 7rem 14rem;
     padding: 8rem 19rem 8.3rem 19rem;
-    background-color: #CB66BD;
+    background-image: linear-gradient(#CB66BD,#FC575A);
     color: azure;
-    
-
+    font-family: 'Inter';
 }
 
 .ctn-month{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 4.4rem;
+    padding: 0 1.8rem;
+
     margin-bottom: 3.2rem;
 }
 
 .current-month {
     font-size: 3rem;
     text-transform: uppercase;
+    font-weight: 600;
+}
+
+.ctn-arrow-month{
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
 }
 
 .preview-months{
     text-transform: capitalize;
     font-size: 1.8rem;
 }
+
+
 
 
 .calender-content{
