@@ -13,15 +13,16 @@ export class Calender extends Component {
       nextMonth: "",
       fistDayOfMonth: "",
       currentDay: "",
+      lastDay: 0,
       year: ""
     }
   }
 
   componentDidMount () {
-    this.renderCalenderData();
+    this.setCalenderData();
   }
 
-  renderCalenderData = () => {
+  setCalenderData = () => {
     let date = new Date()
     
     // Returns zero indexed month number
@@ -32,16 +33,30 @@ export class Calender extends Component {
 
     let currentDate = date.getDate();
     let year = date.getFullYear();
-
     // let month = date.getMonth();
-    // var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    // var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+    // Get week day 
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    // Get number of last day
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+    // console.log(lastDay)
+
+
     this.setState({
       prevMonth: prevMonth,
       currentMonth: currentMonth,
       nextMonth: nextMonth,
+      lastDay: lastDay
     })
 
+  }
+
+
+  CalenderDays = () => {
+    let daysInMonths = [];
+    for (let i = 1; i <= this.state.lastDay; i++ ) {
+     daysInMonths.push(<li className='day-number' id={i}>{i}</li>);
+    }
+    return daysInMonths
   }
 
   // 7 cols , 6 rows
@@ -71,44 +86,47 @@ export class Calender extends Component {
             <li className='day-name'>Fri</li>
             <li className='day-name'>Sat</li>
 
-            <li className='day-number'>1</li>
-
-            <li className='day-number'>2</li>
-            <li className='day-number'>3</li>
-            <li className='day-number'>4</li>
-            <li className='day-number'>5</li>
-            <li className='day-number'>6</li>
-            <li className='day-number'>7</li>
-            <li className='day-number'>8</li>
-            <li className='day-number'>9</li>
-            <li className='day-number'>10</li>
-            <li className='day-number'>11</li>
-            <li className='day-number'>12</li>
-            <li className='day-number'>13</li>
-            <li className='day-number'>14</li>
-            <li className='day-number'>15</li>
-            <li className='day-number'>16</li>
-            <li className='day-number'>17</li>
-            <li className='day-number'>18</li>
-            <li className='day-number'>19</li>
-            <li className='day-number'>20</li>
-            <li className='day-number'>21</li>
-            <li className='day-number'>22</li>
-            <li className='day-number'>23</li>
-            <li className='day-number'>24</li>
-            <li className='day-number'>25</li>
-            <li className='day-number'>26</li>
-            <li className='day-number'>27</li>
-            <li className='day-number'>28</li>
-            <li className='day-number'>29</li>
-            <li className='day-number'>30</li>
-            <li className='day-number'>31</li>
-    
+            {this.CalenderDays()}
         </ol>
 
       </div>
     );
   }
 }
+
+
+
+{/* <li className='day-number'>1</li>
+
+<li className='day-number'>2</li>
+<li className='day-number'>3</li>
+<li className='day-number'>4</li>
+<li className='day-number'>5</li>
+<li className='day-number'>6</li>
+<li className='day-number'>7</li>
+<li className='day-number'>8</li>
+<li className='day-number'>9</li>
+<li className='day-number'>10</li>
+<li className='day-number'>11</li>
+<li className='day-number'>12</li>
+<li className='day-number'>13</li>
+<li className='day-number'>14</li>
+<li className='day-number'>15</li>
+<li className='day-number'>16</li>
+<li className='day-number'>17</li>
+<li className='day-number'>18</li>
+<li className='day-number'>19</li>
+<li className='day-number'>20</li>
+<li className='day-number'>21</li>
+<li className='day-number'>22</li>
+<li className='day-number'>23</li>
+<li className='day-number'>24</li>
+<li className='day-number'>25</li>
+<li className='day-number'>26</li>
+<li className='day-number'>27</li>
+<li className='day-number'>28</li>
+<li className='day-number'>29</li>
+<li className='day-number'>30</li>
+<li className='day-number'>31</li> */}
 
 export default Calender
