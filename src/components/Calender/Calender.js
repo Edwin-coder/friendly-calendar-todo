@@ -5,6 +5,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLongArrowRight, faLongArrowLeft, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 export class Calender extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      prevMonth: "",
+      currentMonth: "",
+      nextMonth: "",
+      fistDayOfMonth: "",
+      currentDay: "",
+      year: ""
+    }
+  }
+
+  componentDidMount () {
+    this.renderCalenderData();
+  }
+
+  renderCalenderData = () => {
+    let date = new Date()
+    
+    // Returns zero indexed month number
+    let  months = ["Jan", "Feb", "March", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let prevMonth = months[date.getMonth() - 1];
+    let currentMonth = months[date.getMonth()];
+    let nextMonth = months[date.getMonth() + 1];
+
+    let currentDate = date.getDate();
+    let year = date.getFullYear();
+
+    // let month = date.getMonth();
+    // var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    // var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0)
+    this.setState({
+      prevMonth: prevMonth,
+      currentMonth: currentMonth,
+      nextMonth: nextMonth,
+    })
+
+  }
 
   // 7 cols , 6 rows
 
@@ -15,11 +53,11 @@ export class Calender extends Component {
         <div className='ctn-month'>
           <div className="ctn-arrow-month">
             <FontAwesomeIcon icon={faArrowLeft} size='2x' /> 
-            <div className="preview-months">Feb</div>
+            <div className="preview-months">{this.state.prevMonth}</div>
           </div>
-          <div className="current-month">March</div>
+          <div className="current-month">{this.state.currentMonth}</div>
           <div className="ctn-arrow-month">
-            <div className="preview-months">April</div>
+            <div className="preview-months">{this.state.nextMonth}</div>
             <FontAwesomeIcon icon={faArrowRight} size='2x' /> 
           </div>
         </div>
