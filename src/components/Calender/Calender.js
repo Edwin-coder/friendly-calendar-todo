@@ -6,94 +6,113 @@ import { faLongArrowRight, faLongArrowLeft, faArrowRight, faArrowLeft } from '@f
 
 export class Calender extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       prevMonth: "",
       currentMonth: "",
       nextMonth: "",
       fistDayOfMonth: "",
-      currentDay: "",
+      currentDate: "",
       lastDay: 0,
-      year: ""
-    }
+      year: "",
+    };
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.setCalenderData();
   }
 
   setCalenderData = () => {
-    let date = new Date()
-    
+    let date = new Date();
+
     // Returns zero indexed month number
-    let  months = ["Jan", "Feb", "March", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let months = [
+      "Jan",
+      "Feb",
+      "March",
+      "Apr",
+      "May",
+      "June",
+      "July",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
     let prevMonth = months[date.getMonth() - 1];
     let currentMonth = months[date.getMonth()];
     let nextMonth = months[date.getMonth() + 1];
 
+    // Get first, current, and last day
     let currentDate = date.getDate();
-    let year = date.getFullYear();
-    // let month = date.getMonth();
-    // Get week day 
+    // Get week day
     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     // Get number of last day
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
-    // console.log(lastDay)
+    var lastDay = new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0
+    ).getDate();
+    // Set current-date class on li element
 
+    let year = date.getFullYear();
 
     this.setState({
       prevMonth: prevMonth,
       currentMonth: currentMonth,
       nextMonth: nextMonth,
-      lastDay: lastDay
-    })
-
-  }
-
+      currentDate: currentDate,
+      lastDay: lastDay,
+    });
+  };
 
   CalenderDays = () => {
     let daysInMonths = [];
-    for (let i = 1; i <= this.state.lastDay; i++ ) {
-     daysInMonths.push(<li className='day-number' id={i}>{i}</li>);
+    for (let i = 1; i <= this.state.lastDay; i++) {
+      if (this.state.currentDate === i) {
+        daysInMonths.push(<li className="day-number current-date" data-id={i}>{i}</li>);
+      } else {
+        daysInMonths.push(<li className="day-number" data-id={i}>{i}</li>);
+      }
     }
-    return daysInMonths
-  }
+    return daysInMonths;
+  };
 
   // 7 cols , 6 rows
 
   render() {
     return (
       <div className="container">
-
-        <div className='ctn-month'>
+        <div className="ctn-month">
           <div className="ctn-arrow-month">
-            <FontAwesomeIcon icon={faArrowLeft} size='2x' /> 
+            <FontAwesomeIcon icon={faArrowLeft} size="2x" />
             <div className="preview-months">{this.state.prevMonth}</div>
           </div>
           <div className="current-month">{this.state.currentMonth}</div>
           <div className="ctn-arrow-month">
             <div className="preview-months">{this.state.nextMonth}</div>
-            <FontAwesomeIcon icon={faArrowRight} size='2x' /> 
+            <FontAwesomeIcon icon={faArrowRight} size="2x" />
           </div>
         </div>
 
         <ol className="calender-content">
-            <li className='day-name'>Sun</li>
-            <li className='day-name'>Mon</li>
-            <li className='day-name'>Tue</li>
-            <li className='day-name'>Wed</li>
-            <li className='day-name'>Thu</li>
-            <li className='day-name'>Fri</li>
-            <li className='day-name'>Sat</li>
+          <li className="day-name">Sun</li>
+          <li className="day-name">Mon</li>
+          <li className="day-name">Tue</li>
+          <li className="day-name">Wed</li>
+          <li className="day-name">Thu</li>
+          <li className="day-name">Fri</li>
+          <li className="day-name">Sat</li>
 
-            {this.CalenderDays()}
+          {this.CalenderDays()}
         </ol>
-
       </div>
     );
   }
 }
 
+export default Calender
 
 
 {/* <li className='day-number'>1</li>
@@ -128,5 +147,3 @@ export class Calender extends Component {
 <li className='day-number'>29</li>
 <li className='day-number'>30</li>
 <li className='day-number'>31</li> */}
-
-export default Calender
