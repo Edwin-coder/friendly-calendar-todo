@@ -25,7 +25,7 @@ export class Calender extends Component {
   setCalenderData = () => {
     let date = new Date();
 
-    // Returns zero indexed month number
+    // Return zero indexed month 
     let months = [
       "Jan",
       "Feb",
@@ -47,14 +47,11 @@ export class Calender extends Component {
     // Get first, current, and last day
     let currentDate = date.getDate();
     // Get week day
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
     // Get number of last day
-    var lastDay = new Date(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      0
-    ).getDate();
-    // Set current-date class on li element
+    var lastDay = new Date(date.getFullYear(),date.getMonth() + 1,0).getDate();
+  
+   
 
     let year = date.getFullYear();
 
@@ -63,12 +60,21 @@ export class Calender extends Component {
       currentMonth: currentMonth,
       nextMonth: nextMonth,
       currentDate: currentDate,
+      fistDayOfMonth: firstDay,
       lastDay: lastDay,
     });
   };
 
   CalenderDays = () => {
     let daysInMonths = [];
+    // 
+    let emptySlots = this.state.fistDayOfMonth;
+    while (emptySlots > 0) {
+      console.log(emptySlots)
+      daysInMonths.push(<li className="empty"></li>);
+      emptySlots--;
+    }
+
     for (let i = 1; i <= this.state.lastDay; i++) {
       if (this.state.currentDate === i) {
         daysInMonths.push(<li className="day-number current-date" data-id={i}>{i}</li>);
@@ -96,7 +102,7 @@ export class Calender extends Component {
           </div>
         </div>
 
-        <ol className="calender-content">
+        <ol className="calender-grid">
           <li className="day-name">Sun</li>
           <li className="day-name">Mon</li>
           <li className="day-name">Tue</li>
