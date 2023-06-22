@@ -35,15 +35,15 @@ export class Calender extends Component {
       "Jan",
       "Feb",
       "March",
-      "Apr",
+      "April",
       "May",
       "June",
       "July",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
 
     let monthIndex = date.getMonth();
@@ -74,7 +74,11 @@ export class Calender extends Component {
 
   // This function depends on current state of : firstDayOfMonth, lastDay, currentDate
   CalenderDays = () => {
+    let todaysDate = new Date();
+    let todaysMonth = todaysDate.getMonth();
+    let todaysYear = todaysDate.getFullYear();
     let daysInMonths = [];
+
     // 
     let emptySlots = this.state.fistDayOfMonth;
     while (emptySlots > 0) {
@@ -84,7 +88,7 @@ export class Calender extends Component {
     }
 
     for (let i = 1; i <= this.state.lastDay; i++) {
-      if (this.state.currentDate === i) {
+      if (this.state.currentDate === i && this.state.monthNumber === todaysMonth && this.state.currentYear === todaysYear) {
         daysInMonths.push(<li className="day-number current-date" data-id={i}>{i}</li>);
       } else {
         daysInMonths.push(<li className="day-number" data-id={i}>{i}</li>);
@@ -114,8 +118,6 @@ export class Calender extends Component {
     }
 
   }
-
-
 
   // 7 cols , 6 rows
 
