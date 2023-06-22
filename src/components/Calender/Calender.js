@@ -9,14 +9,14 @@ export class Calender extends Component {
     super(props);
     this.state = {
       prevMonth: "",
-      currentMonth: "",
+      monthOfFocus: "",
       nextMonth: "",
       fistDayOfMonth: "",
       currentDate: "",
       lastDay: 0,
       year: "",
       monthNumber: null,
-      currentYear: ""
+      yearOfFocus: ""
     };
   }
 
@@ -24,16 +24,16 @@ export class Calender extends Component {
     this.setCalenderData();
   }
 
-  setCalenderData = (currMonth) => {
+  setCalenderData = (indexOfMonth) => {
     
     // Ternary Operator 
     let currentDate = new Date().getDate();
-    let date = !this.state.currentMonth ? new Date() : new Date(this.state.currentYear, currMonth, currentDate );
+    let date = !this.state.monthOfFocus ? new Date() : new Date(this.state.yearOfFocus, indexOfMonth, currentDate );
 
     // Return zero indexed month 
     let months = [
-      "Jan",
-      "Feb",
+      "January",
+      "February",
       "March",
       "April",
       "May",
@@ -49,9 +49,9 @@ export class Calender extends Component {
     let monthIndex = date.getMonth();
     let year = date.getFullYear();
 
-    let prevMonth = months[monthIndex - 1];
-    let currentMonth = months[monthIndex];
-    let nextMonth = months[monthIndex + 1];
+    let prevMonth = !months[monthIndex - 1] ? "December": months[monthIndex - 1];
+    let monthOfFocus = months[monthIndex];
+    let nextMonth = !months[monthIndex + 1] ? "January": months[monthIndex + 1];
 
     // Get first, current, and last day
     // Get week day
@@ -62,12 +62,12 @@ export class Calender extends Component {
   
     this.setState({
       prevMonth: prevMonth,
-      currentMonth: currentMonth,
+      monthOfFocus: monthOfFocus,
       nextMonth: nextMonth,
       currentDate: currentDate,
       fistDayOfMonth: firstDay,
       lastDay: lastDay,
-      currentYear: year,
+      yearOfFocus: year,
       monthNumber: monthIndex
     });
   };
@@ -88,7 +88,7 @@ export class Calender extends Component {
     }
 
     for (let i = 1; i <= this.state.lastDay; i++) {
-      if (this.state.currentDate === i && this.state.monthNumber === todaysMonth && this.state.currentYear === todaysYear) {
+      if (this.state.currentDate === i && this.state.monthNumber === todaysMonth && this.state.yearOfFocus === todaysYear) {
         daysInMonths.push(<li className="day-number current-date" data-id={i}>{i}</li>);
       } else {
         daysInMonths.push(<li className="day-number" data-id={i}>{i}</li>);
@@ -100,21 +100,21 @@ export class Calender extends Component {
   };
 
   changeMonthHandler = (e) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     let target = e.currentTarget.dataset.name
+    let indexOfMonth;
     console.log(target)
-
     if (target === "next") {
 
-      let increasedMonthIndex = this.state.monthNumber += 1;
+      indexOfMonth = this.state.monthNumber += 1;
       
-      this.setCalenderData(increasedMonthIndex);
+      this.setCalenderData(indexOfMonth);
 
     } else if (target === "previous") {
 
-      let decreasedMonthIndex = this.state.monthNumber -= 1;
+      indexOfMonth = this.state.monthNumber -= 1;
       
-      this.setCalenderData(decreasedMonthIndex);
+      this.setCalenderData(indexOfMonth);
     }
 
   }
@@ -129,7 +129,7 @@ export class Calender extends Component {
             <FontAwesomeIcon icon={faArrowLeft} size="2x"  className='next-icon' data-name="previous" onClick={this.changeMonthHandler}  />
             <div className="preview-months">{this.state.prevMonth}</div>
           </div>
-          <div className="current-month" onClick={this.newDateHandler}>{this.state.currentMonth} {this.state.currentYear}</div>
+          <div className="current-month" onClick={this.newDateHandler}>{this.state.monthOfFocus} {this.state.yearOfFocus}</div>
           <div className="ctn-arrow-month">
             <div className="preview-months">{this.state.nextMonth}</div>
             <FontAwesomeIcon icon={faArrowRight} size="2x"  className='next-icon'  data-name="next"  onClick={this.changeMonthHandler}  />
