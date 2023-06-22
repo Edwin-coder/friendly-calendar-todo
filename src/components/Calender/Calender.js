@@ -15,6 +15,8 @@ export class Calender extends Component {
       currentDate: "",
       lastDay: 0,
       year: "",
+      monthNumber: null,
+      currentYear: ""
     };
   }
 
@@ -22,8 +24,11 @@ export class Calender extends Component {
     this.setCalenderData();
   }
 
-  setCalenderData = () => {
-    let date = new Date();
+  setCalenderData = (currMonth) => {
+    
+    // Ternary Operator 
+    let currentDate = new Date().getDate();
+    let date = !this.state.currentMonth ? new Date() : new Date(this.state.currentYear, currMonth, currentDate );
 
     // Return zero indexed month 
     let months = [
@@ -40,21 +45,21 @@ export class Calender extends Component {
       "Nov",
       "Dec",
     ];
-    let prevMonth = months[date.getMonth() - 1];
-    let currentMonth = months[date.getMonth()];
-    let nextMonth = months[date.getMonth() + 1];
 
-    // Get first, current, and last day
-    let currentDate = date.getDate();
-    // Get week day
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
-    // Get number of last day
-    var lastDay = new Date(date.getFullYear(),date.getMonth() + 1,0).getDate();
-  
-   
-
+    let monthIndex = date.getMonth();
     let year = date.getFullYear();
 
+    let prevMonth = months[monthIndex - 1];
+    let currentMonth = months[monthIndex];
+    let nextMonth = months[monthIndex + 1];
+
+    // Get first, current, and last day
+    // Get week day
+    var firstDay = new Date(year, monthIndex, 1).getDay();
+    // Get number of last day
+    var lastDay = new Date(year, monthIndex + 1,0).getDate();
+  
+  
     this.setState({
       prevMonth: prevMonth,
       currentMonth: currentMonth,
@@ -62,15 +67,18 @@ export class Calender extends Component {
       currentDate: currentDate,
       fistDayOfMonth: firstDay,
       lastDay: lastDay,
+      currentYear: year,
+      monthNumber: monthIndex
     });
   };
 
+  // This function depends on current state of : firstDayOfMonth, lastDay, currentDate
   CalenderDays = () => {
     let daysInMonths = [];
     // 
     let emptySlots = this.state.fistDayOfMonth;
     while (emptySlots > 0) {
-      console.log(emptySlots)
+      // console.log({'emptySlots': emptySlots })
       daysInMonths.push(<li className="empty"></li>);
       emptySlots--;
     }
@@ -82,8 +90,35 @@ export class Calender extends Component {
         daysInMonths.push(<li className="day-number" data-id={i}>{i}</li>);
       }
     }
+ 
     return daysInMonths;
+  
   };
+
+  changeMonthHandler = (e) => {
+    e.stopPropagation();
+    let target = e.target.dataset.name
+    console.log(target)
+    let date = new Date();
+
+    if (target === "next") {
+
+      let increasedMonthIndex = this.state.monthNumber += 1;
+      
+      this.setCalenderData(increasedMonthIndex);
+
+    } else if (target === "previous") {
+
+      let decreasedMonthIndex = this.state.monthNumber -= 1;
+      
+      this.setCalenderData(decreasedMonthIndex);
+    }
+
+    // Change index position in months array
+    // Will have to keep track of position in months array 
+  }
+
+
 
   // 7 cols , 6 rows
 
@@ -91,14 +126,14 @@ export class Calender extends Component {
     return (
       <div className="container">
         <div className="ctn-month">
-          <div className="ctn-arrow-month">
-            <FontAwesomeIcon icon={faArrowLeft} size="2x" />
+          <div className="ctn-arrow-month" onClick={this.changeMonthHandler}>
+            <FontAwesomeIcon icon={faArrowLeft} size="2x"  className='next-icon' data-name="previous"  />
             <div className="preview-months">{this.state.prevMonth}</div>
           </div>
-          <div className="current-month">{this.state.currentMonth}</div>
+          <div className="current-month" onClick={this.newDateHandler}>{this.state.currentMonth} {this.state.currentYear}</div>
           <div className="ctn-arrow-month">
             <div className="preview-months">{this.state.nextMonth}</div>
-            <FontAwesomeIcon icon={faArrowRight} size="2x" />
+            <FontAwesomeIcon icon={faArrowRight} size="2x" onClick={this.changeMonthHandler} className='next-icon'  data-name="next"  />
           </div>
         </div>
 
@@ -123,7 +158,7 @@ export default Calender
 
 {/* <li className='day-number'>1</li>
 
-<li className='day-number'>2</li>
+<li className='day-number'>2</li> 
 <li className='day-number'>3</li>
 <li className='day-number'>4</li>
 <li className='day-number'>5</li>

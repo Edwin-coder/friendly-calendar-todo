@@ -32,6 +32,11 @@
 .preview-months{
     text-transform: capitalize;
     font-size: 1.8rem;
+   
+}
+
+.next-icon{
+    cursor: pointer;
 }
 
 .current-date {
